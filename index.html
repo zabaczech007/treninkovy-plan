@@ -1,0 +1,780 @@
+<title>28denní domácí plán</title>
+<meta name="description" content="28denní domácí silový plán pro muže 40+ – šetrný ke kloubům.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+
+<style>
+:root{
+  --bg:#f4f3ec;
+  --surface:#ffffff;
+  --surface-2:#faf9f3;
+  --ink:#23271f;
+  --ink-soft:#5b6053;
+  --ink-faint:#8b8f80;
+  --line:#e4e2d7;
+  --accent:#3f6b4c;
+  --accent-ink:#ffffff;
+  --accent-soft:#e6efe2;
+
+  --train-bg:#dcebd1; --train-line:#a1c58d; --train-ink:#2f4823;
+  --rest-bg:#efe6d1;  --rest-line:#d9c69a;  --rest-ink:#5c4c29;
+  --off-bg:#e5e4de;   --off-line:#c9c7bd;   --off-ink:#54524a;
+
+  --radius:14px;
+  --shadow:0 1px 2px rgba(30,35,25,.06), 0 8px 22px rgba(30,35,25,.05);
+
+  --font-display:'Fraunces','Iowan Old Style',Georgia,serif;
+  --font-body:'Hanken Grotesk',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#14160f;
+    --surface:#1d2016;
+    --surface-2:#191b12;
+    --ink:#e9e9df;
+    --ink-soft:#a8ac9c;
+    --ink-faint:#7b7f6f;
+    --line:#31362a;
+    --accent:#85ba8e;
+    --accent-ink:#12160e;
+    --accent-soft:#243021;
+    --train-bg:#25331d; --train-line:#3f5a33; --train-ink:#bfd9af;
+    --rest-bg:#312b1d;  --rest-line:#4e432d;  --rest-ink:#e0ca9e;
+    --off-bg:#26261f;   --off-line:#3c3b32;   --off-ink:#b8b6a9;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14160f;
+  --surface:#1d2016;
+  --surface-2:#191b12;
+  --ink:#e9e9df;
+  --ink-soft:#a8ac9c;
+  --ink-faint:#7b7f6f;
+  --line:#31362a;
+  --accent:#85ba8e;
+  --accent-ink:#12160e;
+  --accent-soft:#243021;
+  --train-bg:#25331d; --train-line:#3f5a33; --train-ink:#bfd9af;
+  --rest-bg:#312b1d;  --rest-line:#4e432d;  --rest-ink:#e0ca9e;
+  --off-bg:#26261f;   --off-line:#3c3b32;   --off-ink:#b8b6a9;
+  --shadow:0 1px 2px rgba(0,0,0,.3), 0 8px 22px rgba(0,0,0,.25);
+}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.6;
+  -webkit-font-smoothing:antialiased;display:flex;justify-content:center;min-height:100dvh}
+button{font:inherit;color:inherit;cursor:pointer}
+
+.app{width:100%;max-width:600px;min-height:100dvh;display:flex;flex-direction:column;
+  background:var(--bg);position:relative}
+
+/* ---------- app bar ---------- */
+.appbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
+  padding:14px 16px 12px;background:color-mix(in srgb,var(--bg) 88%,transparent);
+  backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.appbar h1{margin:0;font-family:var(--font-display);font-weight:500;font-size:1.15rem;
+  letter-spacing:-.01em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pill{font-family:var(--font-mono);font-size:.74rem;font-weight:500;letter-spacing:.02em;
+  background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:4px 9px;
+  white-space:nowrap;font-variant-numeric:tabular-nums}
+.icon-btn{border:1px solid var(--line);background:var(--surface);width:34px;height:34px;
+  border-radius:9px;display:grid;place-items:center;font-size:.95rem;line-height:1;flex:none}
+.progress{height:3px;background:var(--line);position:sticky;top:59px;z-index:19}
+.progress > i{display:block;height:100%;background:var(--accent);transition:width .35s ease}
+
+/* ---------- main ---------- */
+main{flex:1;padding:18px 16px calc(88px + env(safe-area-inset-bottom))}
+h2.sec{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink-faint);margin:26px 0 10px}
+.meta{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--ink-faint)}
+.view-title{font-family:var(--font-display);font-weight:500;font-size:clamp(1.7rem,6vw,2.15rem);
+  line-height:1.12;letter-spacing:-.015em;margin:.35rem 0 .1rem;text-wrap:balance}
+.lede{color:var(--ink-soft);margin:.2rem 0 0}
+p{margin:.7rem 0}
+
+.back{display:inline-flex;align-items:center;gap:6px;border:none;background:none;padding:6px 0;
+  color:var(--ink-soft);font-weight:600;font-size:.9rem;margin-bottom:4px}
+.back:hover{color:var(--accent)}
+
+/* ---------- today card ---------- */
+.today{display:flex;flex-direction:column;gap:3px;width:100%;text-align:left;border:1px solid var(--line);
+  border-radius:var(--radius);padding:16px 16px 15px;background:var(--surface);box-shadow:var(--shadow);
+  border-left:5px solid var(--accent)}
+.today.t-training{border-left-color:var(--train-line)}
+.today.t-rest,.today.t-active{border-left-color:var(--rest-line)}
+.today.t-off{border-left-color:var(--off-line)}
+.today .tc-label{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.09em;color:var(--ink-faint);
+  text-transform:uppercase}
+.today .tc-title{font-family:var(--font-display);font-size:1.4rem;font-weight:500;letter-spacing:-.01em}
+.today .tc-cta{color:var(--accent);font-weight:600;font-size:.9rem;margin-top:4px}
+.today.muted{display:block;color:var(--ink-soft);border-left-color:var(--line);font-size:.95rem}
+
+/* ---------- week list ---------- */
+.week{margin-top:22px}
+.week-head{display:flex;align-items:baseline;gap:10px;margin-bottom:10px}
+.week-head h2{margin:0;font-family:var(--font-display);font-weight:500;font-size:1.15rem}
+.tag{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--ink-faint);border:1px solid var(--line);border-radius:999px;padding:2px 8px}
+.days{display:flex;flex-direction:column;gap:7px}
+
+.day-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border-radius:12px;
+  padding:11px 13px;border:1px solid var(--rl);border-left-width:5px;background:var(--rb);color:var(--ink)}
+.day-row.t-training{--rb:var(--train-bg);--rl:var(--train-line);--ri:var(--train-ink)}
+.day-row.t-rest,.day-row.t-active{--rb:var(--rest-bg);--rl:var(--rest-line);--ri:var(--rest-ink)}
+.day-row.t-off{--rb:var(--off-bg);--rl:var(--off-line);--ri:var(--off-ink)}
+.day-row.is-today{outline:2px solid var(--accent);outline-offset:2px}
+.day-row .badge{font-family:var(--font-display);font-weight:600;font-size:1.15rem;width:1.5rem;
+  text-align:center;color:var(--ri);flex:none}
+.day-row .d-main{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.day-row .d-title{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.day-row .d-meta{font-size:.8rem;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.day-row .d-right{display:flex;flex-direction:column;align-items:flex-end;gap:3px;flex:none}
+.day-row .d-date{font-family:var(--font-mono);font-size:.72rem;color:var(--ink-soft);white-space:nowrap}
+.day-row .tick{width:18px;height:18px;border-radius:999px;border:1.5px solid var(--rl);display:grid;
+  place-items:center;font-size:.7rem;color:transparent}
+.day-row.done .tick{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+/* ---------- day detail ---------- */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 15px;box-shadow:var(--shadow)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 2px}
+.chip{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.02em;background:var(--surface-2);
+  border:1px solid var(--line);border-radius:999px;padding:4px 10px;color:var(--ink-soft)}
+.phase-card{margin-top:14px;background:var(--surface-2);border:1px solid var(--line);
+  border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px}
+.phase-card b{font-family:var(--font-display);font-weight:600}
+.phase-card p{margin:.3rem 0 0;font-size:.9rem;color:var(--ink-soft)}
+
+.ex-row{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--surface);
+  border:1px solid var(--line);border-radius:12px;padding:12px 13px;margin-top:8px}
+.ex-row .ex-num{font-family:var(--font-display);font-weight:600;color:var(--accent);width:1.2rem;flex:none;text-align:center}
+.ex-row .ex-main{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}
+.ex-row .ex-name{font-weight:600}
+.ex-row .ex-sub{font-size:.76rem;color:var(--ink-faint);font-family:var(--font-mono);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ex-row .ex-dose{font-family:var(--font-mono);font-weight:500;font-size:.86rem;
+  font-variant-numeric:tabular-nums;color:var(--ink);white-space:nowrap;flex:none}
+.ex-row .chev{color:var(--ink-faint);flex:none}
+
+.callout{margin-top:14px;background:var(--accent-soft);border:1px solid var(--train-line);
+  border-radius:12px;padding:12px 14px;font-size:.9rem}
+.callout .link{display:block;margin-top:6px;border:none;background:none;padding:0;color:var(--accent);font-weight:600}
+
+.done-btn{width:100%;margin-top:22px;border:1px solid var(--accent);background:var(--surface);
+  color:var(--accent);font-weight:700;border-radius:12px;padding:14px;font-size:.95rem}
+.done-btn.is-done{background:var(--accent);color:var(--accent-ink)}
+
+/* ---------- exercise detail ---------- */
+.ex-en{font-family:var(--font-mono);font-size:.8rem;color:var(--ink-faint);letter-spacing:.02em}
+.sec-box{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 15px;margin-top:10px}
+.sec-box.safe{background:var(--surface-2);border-left:4px solid var(--rest-line)}
+.sec-box.easy{background:var(--accent-soft);border:1px solid var(--train-line)}
+.sec-box ol,.sec-box ul{margin:.2rem 0;padding-left:1.25rem}
+.sec-box li{margin:.35rem 0}
+.sec-box.safe li::marker{color:var(--rest-ink)}
+
+.sub-now{background:var(--accent-soft);border:1px solid var(--train-line);border-radius:12px;
+  padding:12px 14px;margin:12px 0;font-size:.9rem}
+.sub-now b{font-family:var(--font-display)}
+.alt-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.alt{width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;
+  padding:11px 13px;font-size:.9rem;line-height:1.4}
+.alt.active{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
+.alt.active::before{content:"✓ ";color:var(--accent)}
+.custom-row{display:flex;gap:8px;margin-top:10px}
+.custom-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
+  background:var(--surface);color:var(--ink);font:inherit}
+.btn{border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink);font-weight:600;
+  border-radius:10px;padding:10px 14px;font-size:.88rem;flex:none}
+.btn.ghost{background:var(--surface);color:var(--accent)}
+.tip{background:var(--rest-bg);border:1px solid var(--rest-line);color:var(--rest-ink);border-radius:10px;
+  padding:11px 13px;font-size:.86rem;margin-top:10px}
+
+/* ---------- settings ---------- */
+.set-group{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:14px 15px;margin-top:12px;box-shadow:var(--shadow)}
+.set-group h3{margin:0 0 8px;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--ink-faint)}
+.set-group input[type=date]{border:1px solid var(--line);border-radius:10px;padding:9px 11px;font:inherit;
+  background:var(--surface);color:var(--ink)}
+.dots{display:flex;gap:5px;margin:8px 0}
+.dots i{width:14px;height:14px;border-radius:999px;border:1.5px solid var(--line);display:inline-block}
+.dots i.on{background:var(--accent);border-color:var(--accent)}
+.legend{display:flex;flex-direction:column;gap:6px;font-size:.88rem}
+.legend span{display:flex;align-items:center;gap:9px}
+.sw{width:16px;height:16px;border-radius:5px;border:1px solid}
+.sw.t{background:var(--train-bg);border-color:var(--train-line)}
+.sw.r{background:var(--rest-bg);border-color:var(--rest-line)}
+.sw.o{background:var(--off-bg);border-color:var(--off-line)}
+.txt-btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 13px;
+  font-size:.85rem;font-weight:600;color:var(--ink-soft);margin-top:10px}
+.sub-line{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:.86rem;
+  padding:8px 0;border-top:1px solid var(--line)}
+.sub-line:first-of-type{border-top:none}
+.sub-line .rv{border:none;background:none;color:var(--accent);font-weight:600;flex:none}
+.note{font-size:.82rem;color:var(--ink-faint);margin-top:10px}
+
+/* ---------- tab bar ---------- */
+.tabbar{position:sticky;bottom:0;z-index:20;display:flex;background:color-mix(in srgb,var(--surface) 92%,transparent);
+  backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:6px 6px calc(6px + env(safe-area-inset-bottom))}
+.tabbar button{flex:1;border:none;background:none;padding:10px 4px;border-radius:10px;font-weight:600;
+  font-size:.82rem;color:var(--ink-faint)}
+.tabbar button.active{color:var(--accent);background:var(--accent-soft)}
+
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="app" id="app">
+  <header class="appbar">
+    <h1 id="bar-title">28denní plán</h1>
+    <span class="pill" id="bar-pill">0/12</span>
+    <button class="icon-btn" data-act="theme" aria-label="Přepnout světlý/tmavý režim">◐</button>
+  </header>
+  <div class="progress" id="bar-progress"><i style="width:0%"></i></div>
+  <main id="main"></main>
+  <nav class="tabbar" id="tabbar">
+    <button data-act="nav" data-view="plan">Plán</button>
+    <button data-act="nav" data-view="exercises">Cviky</button>
+    <button data-act="nav" data-view="settings">Nastavení</button>
+  </nav>
+</div>
+
+<script>
+"use strict";
+const STORE_KEY = "treninkovy-plan-v1";
+
+/* ---------------- data ---------------- */
+const EXERCISES = {
+  pushup:{
+    name:"Kliky s uvolněním rukou", en:"Hand-Release Push-ups",
+    target:"Ramena, mezilopatkové svaly, hrudník", wristNote:true,
+    start:"Leh na břiše. Dlaně polož na zem pod ramena, prsty směřují dopředu, lokty přitažené k tělu. Nohy natažené, špičky opřené o zem. Aktivuj břicho a hýždě, ať je tělo zpevněné v jedné přímce.",
+    steps:[
+      "Zatlač dlaněmi do země a zvedni celé tělo najednou nahoru do vzporu – boky a hrudník stoupají současně.",
+      "V horní poloze tlač ramena od uší a udrž tělo rovné, nepovoluj bedra.",
+      "S nádechem se pomalu spouštěj dolů, lokty svírají s trupem zhruba 45°.",
+      "Dole se polož celou vahou na zem a na okamžik úplně zvedni dlaně ze země – odtud „uvolnění rukou“.",
+      "Vrať dlaně pod ramena a pohyb zopakuj. Žádné pružení, každé opakování začíná z klidu na zemi."
+    ],
+    safety:[
+      "Zápěstí: pokud tlačí extenze, podlož dlaně srolovaným ručníkem nebo použij madla či činky s neutrálním úchopem (viz Náhrada cviku).",
+      "Klesej hrudníkem, ne hlavou. Krk drž prodloužený, pohled mírně před ruce.",
+      "Bedra se nesmí prohýbat – hýždě a břicho aktivní od prvního do posledního opakování.",
+      "Lokty veď podél těla, nerozhazuj je do stran – šetří to ramenní kloub.",
+      "V týdnech 1–2 nekonči sérii do selhání, nech si 2–3 opakování v záloze."
+    ],
+    easier:"Dej dlaně na vyvýšenou pevnou plochu – kuchyňskou linku, parapet, opěradlo gauče opřené o zeď. Čím výš ruce, tím menší zátěž. Vyvýšení je pro zápěstí šetrnější než kliky z kolen.",
+    alternatives:[
+      "Kliky na push-up madlech nebo hlavách jednoruček – neutrální úchop drží zápěstí rovné",
+      "Floor press s gumou / expandérem: leh na zádech, guma vedená pod lopatkami, tlač dlaněmi vzhůru a dopředu",
+      "Kliky o stěnu nebo o vyšší pevnou plochu – intenzitu řídíš vzdáleností nohou od opory"
+    ]
+  },
+  boxsquat:{
+    name:"Box dřepy", en:"Box Squats",
+    target:"Stehna, hýždě – šetrné ke kolenům",
+    start:"Postav se těsně před pevnou židli nebo bednu, chodidla na šířku boků, špičky mírně vytočené ven. Ruce předpaž pro rovnováhu, váha na celých chodidlech.",
+    steps:[
+      "Nadechni se do břicha a zpevni střed těla.",
+      "Zasuň boky vzad, jako bys chtěl zavřít dveře zadkem, a současně pokrč kolena.",
+      "Kontrolovaně klesej, dokud se hýžděmi lehce nedotkneš sedáku – dosedni, ale neplácni sebou a nesedej si celou vahou.",
+      "Krátká pauza v dolní poloze, kolena míří ve směru špiček.",
+      "Zatlač patami do země a vstaň do plného stoje, nahoře stáhni hýždě."
+    ],
+    safety:[
+      "Kolena nenechávej padat dovnitř – aktivně je „tlač“ ven, do linie špiček.",
+      "Hrudník vzhůru, záda rovná, pohled vpřed. Nehrb se ani nezaklákej.",
+      "Výšku bedny zvol tak, aby stehna klesla nanejvýš do vodorovné polohy. Když kolena protestují, dej bednu vyšší.",
+      "Paty zůstávají na zemi po celou dobu pohybu."
+    ],
+    easier:"Použij vyšší židli nebo přidej polštář – menší rozsah pohybu. Můžeš se přidržet futra dveří nebo pevné opory a lehce si pomoct pažemi při vstávání.",
+    alternatives:[
+      "Dřep k židli s přidržením TRX nebo gumy zavěšené za dveře",
+      "Opakovaný sed–stoj z vyšší židle, dlaně na stehnech",
+      "Most na hýždě (glute bridge) vleže na zádech – pokud dřep dráždí kolena"
+    ]
+  },
+  rows:{
+    name:"Obrácené přitahování", en:"Inverted Rows",
+    target:"Záda, zadní ramena, držení těla",
+    start:"Ulož pevnou tyč do výše boků až pasu – nízká hrazda, tyč mezi dvěma opěrami, hrana těžkého stolu. Chyť ji neutrálním nebo nadhmatem na šířku ramen a zavěs se pod ni: tělo rovné jako prkno, paty opřené o zem, paže natažené.",
+    steps:[
+      "Zpevni celé tělo – hýždě a břicho aktivní, tělo v jedné přímce od pat po hlavu.",
+      "Nejdřív stáhni lopatky k sobě a dolů, teprve pak pokrč lokty.",
+      "Přitáhni hrudník k tyči, lokty veď těsně podél těla.",
+      "Nahoře krátká pauza, hrudník co nejblíž tyči.",
+      "Kontrolovaně se spusť zpět do natažených paží, aniž bys povolil zpevnění trupu."
+    ],
+    safety:[
+      "Táhne hrudník, ne brada – nezaklákej hlavu a nepředsouvej krk k tyči.",
+      "Boky nesmí klesat: žádné prohnutí v bedrech, drž „prkno“.",
+      "Ramena pryč od uší, každé opakování začíná stažením lopatek.",
+      "Neutrální úchop na šířku ramen je k ramennímu kloubu nejpřívětivější."
+    ],
+    easier:"Nastav tyč výš – čím svisleji je tělo, tím lehčí cvik. Nebo pokrč kolena a přisuň chodidla blíž pod tělo, ať se část váhy přenese na nohy.",
+    alternatives:[
+      "Přítahy gumy vsedě na zemi, tah k pasu, lokty podél těla",
+      "Přítahy jednoruč s jednoručkou v předklonu, druhá ruka opřená o židli",
+      "Přítahy gumy zavěšené za kliku nebo pant dveří, ve stoji"
+    ]
+  },
+  lunge:{
+    name:"Výpady vzad", en:"Reverse Lunges",
+    target:"Nohy, hýždě, stabilita – šetrnější ke kolenům než výpad vpřed",
+    start:"Stoj spojný, chodidla na šířku boků, ruce v bok nebo předpažené. Zpevni břicho, ramena stažená dolů.",
+    steps:[
+      "Udělej dlouhý, kontrolovaný krok jednou nohou vzad.",
+      "Měkce se opři přední částí chodidla zadní nohy a klesej dolů – obě kolena se blíží k pravému úhlu.",
+      "Zadní koleno klesá k zemi, ale nedotýká se jí tvrdě. Trup zůstává vzpřímený.",
+      "Váha spočívá hlavně na přední noze, konkrétně na patě.",
+      "Zatlač přední patou do země a přitáhni zadní nohu zpět do stoje.",
+      "Vystřídej nohy, nebo dokonči celou sérii na jednu nohu podle plánu."
+    ],
+    safety:[
+      "Přední koleno drž nad kotníkem, nenech ho přepadnout před špičku.",
+      "Krok veď rovně vzad na šířku boků, ne do jedné stopy – získáš stabilitu.",
+      "Při ztrátě rovnováhy se jednou rukou přidrž židle nebo stěny, není to slabost.",
+      "Zmenši rozsah, pokud koleno protestuje. Nikdy necvič do bolesti."
+    ],
+    easier:"Zkrať rozsah – nesestupuj tak hluboko. Přidrž se pevné opory jednou rukou, nebo cvič statický výpad: nohy zůstanou vepředu a vzadu, pohybuješ se jen nahoru a dolů.",
+    alternatives:[
+      "Nákroky na nízký pevný stupínek (15–20 cm), střídání nohou",
+      "Dřep na jedné noze k židli s přidržením opory",
+      "Glute bridge na jedné noze vleže na zádech"
+    ]
+  },
+  birddog:{
+    name:"Bird-Dog", en:"Bird-Dog",
+    target:"Hluboký stabilizační systém (core), hýždě, vzpřimovače páteře",
+    start:"Vzpor klečmo: dlaně přesně pod rameny, kolena pod boky, nárty na podložce. Záda v neutrální poloze, ani prohnutá, ani kulatá. Krk je prodloužením páteře, pohled k zemi.",
+    steps:[
+      "Zpevni břicho, představ si, že na kříži balancuješ sklenici vody.",
+      "Pomalu natáhni jednu paži dopředu a protilehlou nohu dozadu, obojí jen do roviny s trupem.",
+      "Nezvedej ruku ani nohu výš než záda a nevytáčej boky – zůstávají rovnoběžné se zemí.",
+      "Výdrž v natažení (podle týdne 30–45 s celkem, střídej strany po ~5 s), pak se kontrolovaně vrať.",
+      "Vystřídej stranu bez „spadnutí“ do výchozí polohy."
+    ],
+    safety:[
+      "Zápěstí: pokud vadí vzpor na dlaních, opři se o pěsti na madlech nebo klesni na předloktí.",
+      "Žádné prohýbání v bedrech – pohyb vede zpevněný trup, ne záda.",
+      "Tempo pomalé a s kontrolou. Nejde o počet, ale o stabilitu.",
+      "Koleno zůstává pod bokem, ne za ním – šetří bederní páteř."
+    ],
+    easier:"Rozděl pohyb: nejdřív procvič jen natažení paže (noha zůstává na zemi), pak jen natažení nohy (paže drží). Spoj obojí až ve chvíli, kdy trup nevrtí. Můžeš zmenšit rozsah.",
+    alternatives:[
+      "Dead-bug vleže na zádech – pokud vadí kolena nebo zápěstí",
+      "Prkno na předloktích, postupně prodlužuj výdrž",
+      "Izometrický dřep zády u stěny"
+    ]
+  }
+};
+
+const DOSE = {
+  pushup:  ["2 × 8","3 × 8–10","3 × 10–12","4 × 10–12"],
+  boxsquat:["2 × 12","3 × 12","3 × 15","4 × 15"],
+  rows:    ["2 × 6–8","3 × 8","3 × 8–10","3 × 10"],
+  lunge:   ["2 × 8 / nohu","3 × 8 / nohu","3 × 10 / nohu","4 × 10 / nohu"],
+  birddog: ["2 × 30 s","2 × 35 s","3 × 40 s","3 × 45 s"]
+};
+
+const WORKOUTS = {
+  A:{name:"Trénink A", focus:"Tlak a stabilní držení těla", order:["pushup","boxsquat","rows","lunge","birddog"]},
+  B:{name:"Trénink B", focus:"Nohy a tah lopatek",          order:["boxsquat","lunge","rows","pushup","birddog"]},
+  C:{name:"Trénink C", focus:"Celé tělo v plynulém tempu",   order:["lunge","pushup","boxsquat","rows","birddog"]}
+};
+const CYCLE = [
+  {type:"training", workout:"A"},
+  {type:"rest"},
+  {type:"training", workout:"B"},
+  {type:"rest"},
+  {type:"training", workout:"C"},
+  {type:"active"},
+  {type:"off"}
+];
+const REST_COPY = {
+  rest:{ title:"Odpočinek",
+    body:"Den volna od silového tréninku. Nech svaly a klouby zregenerovat – kvalitní spánek a dost bílkovin teď udělají víc než další cvičení.",
+    optional:"Volitelně lehký Bird-Dog, 2 × 20–30 s, jen na uvolnění zad a rozhýbání středu těla. Bez námahy, soustřeď se na techniku." },
+  active:{ title:"Aktivní odpočinek",
+    body:"Zařaď 20–40 minut svižné chůze, projížďku na kole nebo lehké plavání. Cíl je rozproudit krev a promazat klouby, ne se zadýchat do vyčerpání.",
+    optional:"Volitelně lehký Bird-Dog, 2 × 20–30 s." },
+  off:{ title:"Volno",
+    body:"Úplný odpočinek. Dnes žádné cílené cvičení, ani Bird-Dog. Regenerace je součást plánu, ne pauza v něm.",
+    optional:null }
+};
+const PHASE = {
+  1:{ name:"Fáze 1 — Anatomická adaptace",
+      note:"Nižší objem, pauzy 60–75 s mezi sériemi. Cílem je čistá technika bez selhání – vždy nech pár opakování v záloze." },
+  2:{ name:"Fáze 2 — Progresivní síla",
+      note:"Vyšší objem, pauzy 45–60 s. Koncentrická fáze (nahoru) výbušnější, excentrická (dolů) pomalá a kontrolovaná." }
+};
+const WD  = ["neděle","pondělí","úterý","středa","čtvrtek","pátek","sobota"];
+const WDS = ["ne","po","út","st","čt","pá","so"];
+
+/* ---------------- state ---------------- */
+let state = loadState();
+function loadState(){
+  const d = { startDate:"2026-09-02", completed:[], subs:{}, theme:null };
+  try{ const s = JSON.parse(localStorage.getItem(STORE_KEY)); if(s && typeof s==="object") Object.assign(d,s); }catch(e){}
+  if(!Array.isArray(d.completed)) d.completed = [];
+  if(!d.subs || typeof d.subs!=="object") d.subs = {};
+  d.view = {name:"plan"};
+  return d;
+}
+function save(){
+  try{
+    localStorage.setItem(STORE_KEY, JSON.stringify({
+      startDate:state.startDate, completed:state.completed, subs:state.subs, theme:state.theme
+    }));
+  }catch(e){}
+}
+
+/* ---------------- helpers ---------------- */
+function startDate(){ const p = state.startDate.split("-").map(Number); return new Date(p[0], p[1]-1, p[2]); }
+function addDays(dt,k){ const r = new Date(dt.getTime()); r.setDate(r.getDate()+k); return r; }
+function todayNum(){
+  const t = new Date(); const t0 = new Date(t.getFullYear(), t.getMonth(), t.getDate());
+  return Math.round((t0 - startDate())/86400000) + 1;
+}
+function fmtLong(dt){ return dt.getDate()+". "+(dt.getMonth()+1)+". "+dt.getFullYear(); }
+function fmtShort(dt){ return dt.getDate()+". "+(dt.getMonth()+1)+"."; }
+function esc(s){ return String(s).replace(/[&<>"]/g, c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function dayInfo(n){
+  const week = Math.ceil(n/7);
+  const pos  = (n-1)%7;
+  const c = CYCLE[pos];
+  return { n, week, pos:pos+1, phase: week<=2?1:2, date:addDays(startDate(), n-1),
+           type:c.type, workout:c.workout||null };
+}
+function dayTitle(info){ return info.type==="training" ? WORKOUTS[info.workout].name : REST_COPY[info.type==="active"?"active":info.type].title; }
+function restTime(week){ return week<=2 ? "60–75 s" : "45–60 s"; }
+function tempoNote(week){ return week<=2
+  ? "Tempo pomalé a kontrolované, série nikdy do selhání."
+  : "Nahoru výbušně, dolů pomalu (≈ 3 s). Poslední 1–2 opakování už musí být znát."; }
+function displayName(id){ return state.subs[id] ? state.subs[id] : EXERCISES[id].name; }
+function trainingDoneCount(){
+  return state.completed.filter(n=>{ const p=(n-1)%7; return CYCLE[p].type==="training"; }).length;
+}
+
+/* ---------------- render ---------------- */
+const main = document.getElementById("main");
+
+function render(){
+  applyTheme();
+  const v = state.view;
+  if(v.name==="plan")      main.innerHTML = viewPlan();
+  else if(v.name==="exercises") main.innerHTML = viewExercises();
+  else if(v.name==="settings")  main.innerHTML = viewSettings();
+  else if(v.name==="day")       main.innerHTML = viewDay(v.n);
+  else if(v.name==="exercise")  main.innerHTML = viewExercise(v.id, v.from, v.n);
+
+  // header
+  const titles = {plan:"28denní plán", exercises:"Cviky", settings:"Nastavení"};
+  document.getElementById("bar-title").textContent =
+    v.name==="day" ? "Den "+v.n : v.name==="exercise" ? "Cvik" : titles[v.name];
+  const done = trainingDoneCount();
+  document.getElementById("bar-pill").textContent = done+"/12";
+  document.getElementById("bar-progress").firstElementChild.style.width = (done/12*100)+"%";
+  document.getElementById("bar-progress").style.display = v.name==="plan" ? "block" : "none";
+
+  // tabs
+  const activeTab = (v.name==="day")?"plan":(v.name==="exercise" && v.from==="exercises")?"exercises":(v.name==="exercise")?"plan":v.name;
+  document.querySelectorAll("#tabbar button").forEach(b=>{
+    b.classList.toggle("active", b.dataset.view===activeTab);
+  });
+  main.scrollTop = 0; window.scrollTo(0,0);
+}
+
+function viewPlan(){
+  const tn = todayNum();
+  let today;
+  if(tn>=1 && tn<=28){
+    const info = dayInfo(tn);
+    today = `<button class="today t-${info.type}" data-act="open-day" data-n="${tn}">
+        <span class="tc-label">Dnes · den ${tn} / 28 · ${WD[info.date.getDay()]}</span>
+        <span class="tc-title">${esc(dayTitle(info))}</span>
+        <span class="tc-cta">Otevřít ${info.type==="training"?"trénink":"den"} ›</span>
+      </button>`;
+  } else if(tn<1){
+    today = `<div class="today muted">Plán začíná ${fmtLong(dayInfo(1).date)} – za ${1-tn} ${1-tn===1?"den":(1-tn<5?"dny":"dní")}.</div>`;
+  } else {
+    today = `<div class="today muted">Plán dokončen. Odškrtnuto ${trainingDoneCount()} z 12 tréninků. 💪</div>`;
+  }
+
+  let weeks = "";
+  for(let w=1; w<=4; w++){
+    let rows = "";
+    for(let n=(w-1)*7+1; n<=w*7; n++){
+      const info = dayInfo(n);
+      const done = state.completed.includes(n);
+      const isToday = n===tn;
+      const badge = info.type==="training" ? info.workout : info.type==="off" ? "–" : "•";
+      let sub;
+      if(info.type==="training") sub = "5 cviků · pauzy "+restTime(w);
+      else if(info.type==="rest") sub = "volitelně Bird-Dog";
+      else if(info.type==="active") sub = "chůze / kolo";
+      else sub = n===28 ? "volitelný test" : "úplný klid";
+      rows += `<button class="day-row t-${info.type}${done?" done":""}${isToday?" is-today":""}" data-act="open-day" data-n="${n}">
+        <span class="badge">${badge}</span>
+        <span class="d-main">
+          <span class="d-title">${esc(dayTitle(info))}</span>
+          <span class="d-meta">${esc(sub)}</span>
+        </span>
+        <span class="d-right">
+          <span class="d-date">${WDS[info.date.getDay()]} ${fmtShort(info.date)}</span>
+          <span class="tick">✓</span>
+        </span>
+      </button>`;
+    }
+    weeks += `<section class="week">
+      <div class="week-head"><h2>Týden ${w}</h2><span class="tag">${w<=2?"Fáze 1":"Fáze 2"}</span></div>
+      <div class="days">${rows}</div>
+    </section>`;
+  }
+
+  return `${today}
+    <p class="lede" style="margin-top:14px">28 dní, 3 tréninky týdně (A / B / C), cviky s vlastní vahou šetrné ke kolenům, ramenům a zápěstí. Klepni na den pro detail.</p>
+    ${weeks}`;
+}
+
+function viewDay(n){
+  const info = dayInfo(n);
+  const done = state.completed.includes(n);
+  const metaLine = `Den ${n} / 28 · Týden ${info.week} · ${WD[info.date.getDay()]} ${fmtLong(info.date)}`;
+  let body = "";
+
+  if(info.type==="training"){
+    const wk = WORKOUTS[info.workout];
+    const exRows = wk.order.map((id,i)=>{
+      const subbed = !!state.subs[id];
+      return `<button class="ex-row" data-act="open-exercise" data-id="${id}" data-from="day" data-n="${n}">
+        <span class="ex-num">${i+1}</span>
+        <span class="ex-main">
+          <span class="ex-name">${esc(displayName(id))}</span>
+          ${subbed?`<span class="ex-sub">náhrada za ${esc(EXERCISES[id].name)}</span>`:""}
+        </span>
+        <span class="ex-dose">${esc(DOSE[id][info.week-1])}</span>
+        <span class="chev">›</span>
+      </button>`;
+    }).join("");
+    body = `<p class="lede">${esc(wk.focus)}</p>
+      <div class="chips">
+        <span class="chip">Pauzy ${restTime(info.week)}</span>
+        <span class="chip">${info.week<=2?"Fáze 1":"Fáze 2"}</span>
+        <span class="chip">5 cviků</span>
+      </div>
+      <div class="phase-card"><b>${PHASE[info.phase].name}</b><p>${tempoNote(info.week)}</p></div>
+      <h2 class="sec">Cviky</h2>
+      ${exRows}`;
+  } else {
+    const key = info.type==="active" ? "active" : info.type;
+    const rc = REST_COPY[key];
+    body = `<p>${rc.body}</p>`;
+    if(rc.optional){
+      body += `<div class="callout">${esc(rc.optional)}
+        <button class="link" data-act="open-exercise" data-id="birddog" data-from="day" data-n="${n}">Technika Bird-Dog ›</button>
+      </div>`;
+    }
+    if(n===28){
+      const testRows = WORKOUTS.A.order.map((id,i)=>
+        `<button class="ex-row" data-act="open-exercise" data-id="${id}" data-from="day" data-n="${n}">
+          <span class="ex-num">${i+1}</span>
+          <span class="ex-main"><span class="ex-name">${esc(displayName(id))}</span></span>
+          <span class="ex-dose">${esc(DOSE[id][3])}</span><span class="chev">›</span>
+        </button>`).join("");
+      body += `<h2 class="sec">Volitelný závěrečný test</h2>
+        <p>Zopakuj Trénink A hodně pomalým tempem (≈ 3 s dolů, 1 s pauza dole, 2 s nahoru) s dávkami z týdne 4. Zapiš si, kolik čistých opakování zvládneš s bezchybnou technikou u každého cviku – to je tvoje výchozí číslo do dalšího bloku.</p>
+        ${testRows}`;
+    }
+  }
+
+  return `<button class="back" data-act="back">‹ Plán</button>
+    <div class="meta">${esc(metaLine)}</div>
+    <h1 class="view-title">${esc(dayTitle(info))}</h1>
+    ${body}
+    <button class="done-btn${done?" is-done":""}" data-act="toggle-done" data-n="${n}">
+      ${done?"✓ Hotovo — klepnutím zrušit":"Označit den jako hotový"}
+    </button>`;
+}
+
+function viewExercises(){
+  const rows = Object.keys(EXERCISES).map(id=>{
+    const subbed = !!state.subs[id];
+    return `<button class="ex-row" data-act="open-exercise" data-id="${id}" data-from="exercises">
+      <span class="ex-main">
+        <span class="ex-name">${esc(displayName(id))}</span>
+        <span class="ex-sub">${subbed?"náhrada za "+esc(EXERCISES[id].name):esc(EXERCISES[id].target)}</span>
+      </span>
+      <span class="chev">›</span>
+    </button>`;
+  }).join("");
+  return `<h1 class="view-title">Cviky</h1>
+    <p class="lede">Pět základních cviků plánu. U každého najdeš techniku, bezpečnostní body pro věk 40+, lehčí variantu a možnost natrvalo ho nahradit alternativou.</p>
+    ${rows}`;
+}
+
+function viewExercise(id, from, n){
+  const ex = EXERCISES[id];
+  const sub = state.subs[id] || null;
+  const backLabel = from==="day" ? "‹ Den "+n : "‹ Cviky";
+  const alts = ex.alternatives.map(a=>
+    `<button class="alt${sub===a?" active":""}" data-act="set-sub" data-id="${id}" data-val="${esc(a)}">${esc(a)}</button>`
+  ).join("");
+
+  return `<button class="back" data-act="back">${esc(backLabel)}</button>
+    <div class="meta">Cvik · ${esc(ex.target)}</div>
+    <h1 class="view-title">${esc(ex.name)}</h1>
+    <div class="ex-en">${esc(ex.en)}</div>
+
+    ${sub ? `<div class="sub-now">
+        <b>Náhrada je aktivní.</b> Ve všech dnech plánu cvičíš: <b>${esc(sub)}</b>.<br>
+        Popis níže platí pro původní cvik – u náhrady se řiď jejím vlastním správným provedením.
+        <div style="margin-top:8px"><button class="btn ghost" data-act="clear-sub" data-id="${id}">Vrátit původní cvik</button></div>
+      </div>` : ""}
+
+    <h2 class="sec">Výchozí pozice</h2>
+    <div class="sec-box">${esc(ex.start)}</div>
+
+    <h2 class="sec">Provedení krok za krokem</h2>
+    <div class="sec-box"><ol>${ex.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
+
+    <h2 class="sec">Bezpečné cvičení po čtyřicítce</h2>
+    <div class="sec-box safe"><ul>${ex.safety.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div>
+
+    <h2 class="sec">Lehčí varianta</h2>
+    <div class="sec-box easy">${esc(ex.easier)}</div>
+
+    <h2 class="sec">Náhrada cviku</h2>
+    <p style="font-size:.9rem;color:var(--ink-soft)">Kterýkoli cvik můžeš natrvalo nahradit – třeba kvůli bolavému rameni, koleni nebo zápěstí. Volba se uloží a použije ve všech dnech plánu.</p>
+    ${ex.wristNote ? `<div class="tip">Máš‑li po staré tříštivé zlomenině citlivé zápěstí, klasické kliky (i s uvolněním rukou) dráždí kvůli extenzi. Vyber některou z variant s rovným zápěstím níže.</div>` : ""}
+    <div class="alt-list">${alts}</div>
+    <div class="custom-row">
+      <input type="text" data-role="custom-sub" placeholder="Vlastní alternativa…" value="${sub && !ex.alternatives.includes(sub) ? esc(sub) : ""}">
+      <button class="btn" data-act="set-sub-custom" data-id="${id}">Uložit</button>
+    </div>`;
+}
+
+function viewSettings(){
+  const done = trainingDoneCount();
+  const dots = Array.from({length:12}, (_,i)=>`<i class="${i<done?"on":""}"></i>`).join("");
+  const subKeys = Object.keys(state.subs);
+  const subList = subKeys.length
+    ? subKeys.map(id=>`<div class="sub-line"><span>${esc(EXERCISES[id].name)} → <b>${esc(state.subs[id])}</b></span>
+        <button class="rv" data-act="clear-sub" data-id="${id}">vrátit</button></div>`).join("")
+    : `<p class="note">Zatím žádné záměny.</p>`;
+
+  return `<h1 class="view-title">Nastavení</h1>
+
+    <div class="set-group">
+      <h3>Datum startu</h3>
+      <input type="date" data-role="start-date" value="${state.startDate}">
+      <p class="note">Plán počítá s tréninkem hned první den. Kalendář a dny v týdnu se dopočítají od tohoto data.</p>
+    </div>
+
+    <div class="set-group">
+      <h3>Postup</h3>
+      <div>Odškrtnuto <b>${done}</b> z 12 tréninků</div>
+      <div class="dots">${dots}</div>
+      <button class="txt-btn" data-act="clear-progress">Vymazat postup</button>
+    </div>
+
+    <div class="set-group">
+      <h3>Záměny cviků</h3>
+      ${subList}
+      ${subKeys.length?`<button class="txt-btn" data-act="clear-subs">Vymazat všechny záměny</button>`:""}
+    </div>
+
+    <div class="set-group">
+      <h3>Legenda</h3>
+      <div class="legend">
+        <span><i class="sw t"></i> Trénink (A / B / C)</span>
+        <span><i class="sw r"></i> Odpočinek a aktivní odpočinek</span>
+        <span><i class="sw o"></i> Volno – úplný klid</span>
+      </div>
+    </div>
+
+    <div class="set-group">
+      <h3>O aplikaci</h3>
+      <p class="note">Datum startu, odškrtané dny i záměny cviků se ukládají jen v tomto prohlížeči na tomto zařízení. Nikam se neodesílají a nesynchronizují se mezi zařízeními. Vymazání dat prohlížeče je smaže.</p>
+    </div>`;
+}
+
+/* ---------------- theme ---------------- */
+function applyTheme(){
+  const root = document.documentElement;
+  if(state.theme==="dark") root.setAttribute("data-theme","dark");
+  else if(state.theme==="light") root.setAttribute("data-theme","light");
+  else root.removeAttribute("data-theme");
+}
+function toggleTheme(){
+  const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+  const effective = state.theme || (prefersDark ? "dark" : "light");
+  state.theme = effective==="dark" ? "light" : "dark";
+  save(); render();
+}
+
+/* ---------------- events ---------------- */
+const app = document.getElementById("app");
+
+app.addEventListener("click", e=>{
+  const el = e.target.closest("[data-act]");
+  if(!el) return;
+  const act = el.dataset.act;
+
+  if(act==="nav"){ state.view = {name:el.dataset.view}; render(); }
+  else if(act==="theme"){ toggleTheme(); }
+  else if(act==="open-day"){ state.view = {name:"day", n:+el.dataset.n}; render(); }
+  else if(act==="open-exercise"){
+    state.view = {name:"exercise", id:el.dataset.id, from:el.dataset.from||"exercises", n:+el.dataset.n||null};
+    render();
+  }
+  else if(act==="back"){
+    const v = state.view;
+    if(v.name==="exercise" && v.from==="day") state.view = {name:"day", n:v.n};
+    else if(v.name==="exercise") state.view = {name:"exercises"};
+    else state.view = {name:"plan"};
+    render();
+  }
+  else if(act==="toggle-done"){
+    const n = +el.dataset.n;
+    const i = state.completed.indexOf(n);
+    if(i>=0) state.completed.splice(i,1); else state.completed.push(n);
+    save(); render();
+  }
+  else if(act==="set-sub"){
+    state.subs[el.dataset.id] = el.dataset.val;
+    save(); render();
+  }
+  else if(act==="set-sub-custom"){
+    const inp = main.querySelector('[data-role="custom-sub"]');
+    const val = inp && inp.value.trim();
+    if(val){ state.subs[el.dataset.id] = val; save(); render(); }
+  }
+  else if(act==="clear-sub"){
+    delete state.subs[el.dataset.id];
+    save(); render();
+  }
+  else if(act==="clear-progress"){
+    if(confirm("Opravdu vymazat všechny odškrtané dny?")){ state.completed = []; save(); render(); }
+  }
+  else if(act==="clear-subs"){
+    if(confirm("Opravdu vrátit všechny cviky na původní?")){ state.subs = {}; save(); render(); }
+  }
+});
+
+app.addEventListener("change", e=>{
+  const el = e.target;
+  if(el.dataset.role==="start-date" && el.value){
+    state.startDate = el.value;
+    save(); render();
+  }
+});
+
+render();
+</script>
