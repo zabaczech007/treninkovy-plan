@@ -64,6 +64,7 @@
 }
 
 *{box-sizing:border-box}
+[hidden]{display:none!important}
 body{background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.6;
   -webkit-font-smoothing:antialiased;display:flex;justify-content:center;min-height:100dvh}
 button{font:inherit;color:inherit;cursor:pointer}
@@ -72,21 +73,64 @@ button{font:inherit;color:inherit;cursor:pointer}
   background:var(--bg);position:relative}
 
 /* ---------- app bar ---------- */
-.appbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:12px;
-  padding:14px 16px 12px;background:color-mix(in srgb,var(--bg) 88%,transparent);
+.appbar{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:8px;min-height:56px;
+  padding:10px 12px 10px 14px;background:color-mix(in srgb,var(--bg) 90%,transparent);
   backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .appbar h1{margin:0;font-family:var(--font-display);font-weight:500;font-size:1.15rem;
   letter-spacing:-.01em;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pill{font-family:var(--font-mono);font-size:.74rem;font-weight:500;letter-spacing:.02em;
-  background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:4px 9px;
-  white-space:nowrap;font-variant-numeric:tabular-nums}
-.icon-btn{border:1px solid var(--line);background:var(--surface);width:34px;height:34px;
-  border-radius:9px;display:grid;place-items:center;font-size:.95rem;line-height:1;flex:none}
-.progress{height:3px;background:var(--line);position:sticky;top:59px;z-index:19}
-.progress > i{display:block;height:100%;background:var(--accent);transition:width .35s ease}
+.bar-back{border:none;background:none;color:var(--ink-soft);font-weight:600;font-size:.92rem;
+  padding:6px 6px 6px 0;flex:none}
+.bar-back:hover{color:var(--accent)}
+.icon-btn{border:1px solid var(--line);background:var(--surface);width:36px;height:36px;
+  border-radius:10px;display:grid;place-items:center;font-size:1.05rem;line-height:1;flex:none}
+
+.scrim{position:fixed;inset:0;z-index:35;background:transparent}
+.menu-sheet{position:fixed;top:54px;right:10px;z-index:40;min-width:230px;padding:6px;
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);
+  display:flex;flex-direction:column}
+.menu-sheet button{border:none;background:none;text-align:left;padding:11px 12px;border-radius:8px;
+  font-size:.92rem;font-weight:500;color:var(--ink)}
+.menu-sheet button:hover{background:var(--surface-2)}
 
 /* ---------- main ---------- */
-main{flex:1;padding:18px 16px calc(88px + env(safe-area-inset-bottom))}
+main{flex:1;padding:20px 16px calc(40px + env(safe-area-inset-bottom))}
+.today-meta{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;
+  letter-spacing:.09em;color:var(--ink-faint)}
+.prevlink{display:inline-flex;align-items:center;gap:5px;border:none;background:none;
+  color:var(--ink-soft);font-weight:600;font-size:.85rem;padding:2px 0 8px}
+.prevlink:hover{color:var(--accent)}
+.phase-line{margin-top:12px;font-size:.88rem;color:var(--ink-soft);
+  border-left:3px solid var(--accent);padding-left:11px}
+.phase-line b{font-family:var(--font-display);font-weight:600;color:var(--ink)}
+
+/* ---------- modal ---------- */
+.modal-lock{overflow:hidden}
+.backdrop{position:fixed;inset:0;z-index:50;background:rgba(18,20,14,.5);
+  display:flex;align-items:flex-end;justify-content:center}
+.modal{background:var(--surface);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;
+  border-radius:20px 20px 0 0;padding:8px 18px calc(28px + env(safe-area-inset-bottom));
+  box-shadow:0 -10px 44px rgba(0,0,0,.28);-webkit-overflow-scrolling:touch}
+.modal-bar{position:sticky;top:0;display:flex;justify-content:flex-end;background:var(--surface);
+  padding:8px 0 6px;z-index:1}
+.modal-close{border:none;background:var(--surface-2);width:34px;height:34px;border-radius:999px;
+  font-size:1rem;line-height:1;color:var(--ink-soft)}
+.modal .view-title{margin-top:0}
+@media (min-width:560px){
+  .backdrop{align-items:center;padding:24px}
+  .modal{border-radius:18px;max-height:86vh}
+}
+@media (prefers-reduced-motion:no-preference){
+  .backdrop{animation:mfade .16s ease}
+  .modal{animation:mslide .24s cubic-bezier(.2,.7,.2,1)}
+}
+@keyframes mfade{from{opacity:0}}
+@keyframes mslide{from{transform:translateY(9%)}}
+
+.toast{position:fixed;left:50%;bottom:calc(26px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:.86rem;
+  font-weight:600;z-index:60;box-shadow:var(--shadow);max-width:90vw;text-align:center}
+@media (prefers-reduced-motion:no-preference){.toast{animation:tin .2s ease}}
+@keyframes tin{from{opacity:0;transform:translate(-50%,10px)}}
 h2.sec{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;
   color:var(--ink-faint);margin:26px 0 10px}
 .meta{font-family:var(--font-mono);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em;
@@ -231,17 +275,18 @@ a{color:var(--accent)}
 
 <div class="app" id="app">
   <header class="appbar">
-    <h1 id="bar-title">28denní plán</h1>
-    <span class="pill" id="bar-pill">0/12</span>
-    <button class="icon-btn" data-act="theme" aria-label="Přepnout světlý/tmavý režim">◐</button>
+    <button class="bar-back" id="bar-back" data-act="back" hidden>‹ <span id="bar-back-label">Dnes</span></button>
+    <h1 id="bar-title">Dnes</h1>
+    <button class="icon-btn" id="menu-btn" data-act="menu" aria-label="Menu">☰</button>
   </header>
-  <div class="progress" id="bar-progress"><i style="width:0%"></i></div>
   <main id="main"></main>
-  <nav class="tabbar" id="tabbar">
-    <button data-act="nav" data-view="plan">Plán</button>
-    <button data-act="nav" data-view="exercises">Cviky</button>
+  <div id="scrim" class="scrim" hidden data-act="close-overlays"></div>
+  <nav id="menu-sheet" class="menu-sheet" hidden>
+    <button data-act="nav" data-view="plan">Celý plán a historie</button>
     <button data-act="nav" data-view="settings">Nastavení</button>
+    <button data-act="theme">Světlý / tmavý režim</button>
   </nav>
+  <div id="modal-root"></div>
 </div>
 
 <script>
@@ -423,7 +468,7 @@ function loadState(){
   try{ const s = JSON.parse(localStorage.getItem(STORE_KEY)); if(s && typeof s==="object") Object.assign(d,s); }catch(e){}
   if(!Array.isArray(d.completed)) d.completed = [];
   if(!d.subs || typeof d.subs!=="object") d.subs = {};
-  d.view = {name:"plan"};
+  d.view = {name:"today"};
   return d;
 }
 function save(){
@@ -464,49 +509,103 @@ function trainingDoneCount(){
 
 /* ---------------- render ---------------- */
 const main = document.getElementById("main");
+let menuOpen = false;
+let toastMsg = null, toastTimer = null;
+let lastViewKey = "";
 
-function render(){
-  applyTheme();
-  const v = state.view;
-  if(v.name==="plan")      main.innerHTML = viewPlan();
-  else if(v.name==="exercises") main.innerHTML = viewExercises();
-  else if(v.name==="settings")  main.innerHTML = viewSettings();
-  else if(v.name==="day")       main.innerHTML = viewDay(v.n);
-  else if(v.name==="exercise")  main.innerHTML = viewExercise(v.id, v.from, v.n);
+function czDays(n){ return n===1 ? "den" : (n>=2 && n<=4 ? "dny" : "dní"); }
 
-  // header
-  const titles = {plan:"28denní plán", exercises:"Cviky", settings:"Nastavení"};
-  document.getElementById("bar-title").textContent =
-    v.name==="day" ? "Den "+v.n : v.name==="exercise" ? "Cvik" : titles[v.name];
-  const done = trainingDoneCount();
-  document.getElementById("bar-pill").textContent = done+"/12";
-  document.getElementById("bar-progress").firstElementChild.style.width = (done/12*100)+"%";
-  document.getElementById("bar-progress").style.display = v.name==="plan" ? "block" : "none";
+/* date-based today, advanced past days already ticked off */
+function focusInfo(){
+  const tn = todayNum();
+  if(tn < 1) return { state:"before", tn };
+  let d = Math.min(Math.max(tn,1), 28);
+  while(d <= 28 && state.completed.includes(d)) d++;
+  if(d > 28) return { state:"done", tn };
+  return { state:"active", day:d, tn };
+}
 
-  // tabs
-  const activeTab = (v.name==="day")?"plan":(v.name==="exercise" && v.from==="exercises")?"exercises":(v.name==="exercise")?"plan":v.name;
-  document.querySelectorAll("#tabbar button").forEach(b=>{
-    b.classList.toggle("active", b.dataset.view===activeTab);
-  });
-  main.scrollTop = 0; window.scrollTo(0,0);
+function exRow(id, num, dose){
+  const subbed = !!state.subs[id];
+  return `<button class="ex-row" data-act="open-modal" data-id="${id}">
+    ${num?`<span class="ex-num">${num}</span>`:""}
+    <span class="ex-main">
+      <span class="ex-name">${esc(displayName(id))}</span>
+      ${subbed?`<span class="ex-sub">náhrada za ${esc(EXERCISES[id].name)}</span>`:""}
+    </span>
+    ${dose?`<span class="ex-dose">${esc(dose)}</span>`:""}
+    <span class="chev">›</span>
+  </button>`;
+}
+
+/* shared body for the Dnes screen and any day opened from Celý plán */
+function dayBody(n, opts){
+  opts = opts || {};
+  const info = dayInfo(n);
+  const done = state.completed.includes(n);
+  const meta = `${WD[info.date.getDay()]} ${fmtLong(info.date)} · den ${n} / 28 · týden ${info.week}`;
+  let out = `<div class="today-meta">${esc(meta)}</div>
+    <h1 class="view-title">${esc(dayTitle(info))}</h1>`;
+
+  if(info.type === "training"){
+    const wk = WORKOUTS[info.workout];
+    out += `<p class="lede">${esc(wk.focus)}</p>
+      <div class="chips">
+        <span class="chip">Pauzy ${restTime(info.week)}</span>
+        <span class="chip">${info.week<=2?"Fáze 1":"Fáze 2"}</span>
+      </div>
+      <div class="phase-line"><b>${esc(PHASE[info.phase].name)}.</b> ${esc(tempoNote(info.week))}</div>`;
+    out += wk.order.map((id,i)=>exRow(id, i+1, DOSE[id][info.week-1])).join("");
+  } else {
+    const rc = REST_COPY[info.type === "active" ? "active" : info.type];
+    out += `<p>${esc(rc.body)}</p>`;
+    if(rc.optional){
+      out += `<div class="callout">${esc(rc.optional)}
+        <button class="link" data-act="open-modal" data-id="birddog">Technika Bird-Dog ›</button>
+      </div>`;
+    }
+    if(n === 28){
+      out += `<h2 class="sec">Volitelný závěrečný test</h2>
+        <p>Zopakuj Trénink A hodně pomalým tempem (≈ 3 s dolů, 1 s pauza dole, 2 s nahoru) s dávkami z týdne 4. Zapiš si, kolik čistých opakování zvládneš s bezchybnou technikou u každého cviku – to je tvoje výchozí číslo do dalšího bloku.</p>`
+        + WORKOUTS.A.order.map((id,i)=>exRow(id, i+1, DOSE[id][3])).join("");
+    }
+  }
+
+  out += `<button class="done-btn${done?" is-done":""}" data-act="toggle-done" data-n="${n}" data-context="${opts.context||""}">
+    ${done ? "✓ Hotovo — klepnutím zrušit" : (info.type==="training" ? "Označit trénink jako hotový" : "Označit den jako hotový")}
+  </button>`;
+  return out;
+}
+
+function viewToday(){
+  const fi = focusInfo();
+  if(fi.state === "before"){
+    const first = dayInfo(1);
+    const d = 1 - fi.tn;
+    return `<div class="today-meta">Plán ještě nezačal</div>
+      <h1 class="view-title">Za ${d} ${czDays(d)}</h1>
+      <p class="lede">Start ${fmtLong(first.date)} (${WD[first.date.getDay()]}) – den 1 je ${esc(WORKOUTS.A.name)}.</p>
+      <button class="txt-btn" data-act="nav" data-view="plan">Zobrazit celý plán</button>`;
+  }
+  if(fi.state === "done"){
+    return `<div class="today-meta">Hotovo</div>
+      <h1 class="view-title">Plán dokončen 💪</h1>
+      <p class="lede">Odškrtnuto ${trainingDoneCount()} z 12 tréninků. Celou historii najdeš přes menu → Celý plán.</p>
+      <button class="txt-btn" data-act="nav" data-view="plan">Celý plán a historie</button>`;
+  }
+  const n = fi.day;
+  const prev = n > 1
+    ? `<button class="prevlink" data-act="open-day" data-n="${n-1}" data-from="today">‹ ${n-1===fi.tn?"dnešní den":"den "+(n-1)}</button>`
+    : "";
+  return prev + dayBody(n, { context:"today" });
+}
+
+function viewDay(n){
+  return dayBody(n, { context:"day" });
 }
 
 function viewPlan(){
   const tn = todayNum();
-  let today;
-  if(tn>=1 && tn<=28){
-    const info = dayInfo(tn);
-    today = `<button class="today t-${info.type}" data-act="open-day" data-n="${tn}">
-        <span class="tc-label">Dnes · den ${tn} / 28 · ${WD[info.date.getDay()]}</span>
-        <span class="tc-title">${esc(dayTitle(info))}</span>
-        <span class="tc-cta">Otevřít ${info.type==="training"?"trénink":"den"} ›</span>
-      </button>`;
-  } else if(tn<1){
-    today = `<div class="today muted">Plán začíná ${fmtLong(dayInfo(1).date)} – za ${1-tn} ${1-tn===1?"den":(1-tn<5?"dny":"dní")}.</div>`;
-  } else {
-    today = `<div class="today muted">Plán dokončen. Odškrtnuto ${trainingDoneCount()} z 12 tréninků. 💪</div>`;
-  }
-
   let weeks = "";
   for(let w=1; w<=4; w++){
     let rows = "";
@@ -515,12 +614,11 @@ function viewPlan(){
       const done = state.completed.includes(n);
       const isToday = n===tn;
       const badge = info.type==="training" ? info.workout : info.type==="off" ? "–" : "•";
-      let sub;
-      if(info.type==="training") sub = "5 cviků · pauzy "+restTime(w);
-      else if(info.type==="rest") sub = "volitelně Bird-Dog";
-      else if(info.type==="active") sub = "chůze / kolo";
-      else sub = n===28 ? "volitelný test" : "úplný klid";
-      rows += `<button class="day-row t-${info.type}${done?" done":""}${isToday?" is-today":""}" data-act="open-day" data-n="${n}">
+      let sub = info.type==="training" ? "pauzy "+restTime(w)
+        : info.type==="rest" ? "volitelně Bird-Dog"
+        : info.type==="active" ? "chůze / kolo"
+        : n===28 ? "volitelný test" : "úplný klid";
+      rows += `<button class="day-row t-${info.type}${done?" done":""}${isToday?" is-today":""}" data-act="open-day" data-n="${n}" data-from="plan">
         <span class="badge">${badge}</span>
         <span class="d-main">
           <span class="d-title">${esc(dayTitle(info))}</span>
@@ -537,137 +635,28 @@ function viewPlan(){
       <div class="days">${rows}</div>
     </section>`;
   }
-
-  return `${today}
-    <p class="lede" style="margin-top:14px">28 dní, 3 tréninky týdně (A / B / C), cviky s vlastní vahou šetrné ke kolenům, ramenům a zápěstí. Klepni na den pro detail.</p>
+  return `<h1 class="view-title">Celý plán</h1>
+    <p class="lede">28 dní · odškrtnuto ${trainingDoneCount()} z 12 tréninků. Klepni na den pro detail a techniku cviků.</p>
     ${weeks}`;
-}
-
-function viewDay(n){
-  const info = dayInfo(n);
-  const done = state.completed.includes(n);
-  const metaLine = `Den ${n} / 28 · Týden ${info.week} · ${WD[info.date.getDay()]} ${fmtLong(info.date)}`;
-  let body = "";
-
-  if(info.type==="training"){
-    const wk = WORKOUTS[info.workout];
-    const exRows = wk.order.map((id,i)=>{
-      const subbed = !!state.subs[id];
-      return `<button class="ex-row" data-act="open-exercise" data-id="${id}" data-from="day" data-n="${n}">
-        <span class="ex-num">${i+1}</span>
-        <span class="ex-main">
-          <span class="ex-name">${esc(displayName(id))}</span>
-          ${subbed?`<span class="ex-sub">náhrada za ${esc(EXERCISES[id].name)}</span>`:""}
-        </span>
-        <span class="ex-dose">${esc(DOSE[id][info.week-1])}</span>
-        <span class="chev">›</span>
-      </button>`;
-    }).join("");
-    body = `<p class="lede">${esc(wk.focus)}</p>
-      <div class="chips">
-        <span class="chip">Pauzy ${restTime(info.week)}</span>
-        <span class="chip">${info.week<=2?"Fáze 1":"Fáze 2"}</span>
-        <span class="chip">5 cviků</span>
-      </div>
-      <div class="phase-card"><b>${PHASE[info.phase].name}</b><p>${tempoNote(info.week)}</p></div>
-      <h2 class="sec">Cviky</h2>
-      ${exRows}`;
-  } else {
-    const key = info.type==="active" ? "active" : info.type;
-    const rc = REST_COPY[key];
-    body = `<p>${rc.body}</p>`;
-    if(rc.optional){
-      body += `<div class="callout">${esc(rc.optional)}
-        <button class="link" data-act="open-exercise" data-id="birddog" data-from="day" data-n="${n}">Technika Bird-Dog ›</button>
-      </div>`;
-    }
-    if(n===28){
-      const testRows = WORKOUTS.A.order.map((id,i)=>
-        `<button class="ex-row" data-act="open-exercise" data-id="${id}" data-from="day" data-n="${n}">
-          <span class="ex-num">${i+1}</span>
-          <span class="ex-main"><span class="ex-name">${esc(displayName(id))}</span></span>
-          <span class="ex-dose">${esc(DOSE[id][3])}</span><span class="chev">›</span>
-        </button>`).join("");
-      body += `<h2 class="sec">Volitelný závěrečný test</h2>
-        <p>Zopakuj Trénink A hodně pomalým tempem (≈ 3 s dolů, 1 s pauza dole, 2 s nahoru) s dávkami z týdne 4. Zapiš si, kolik čistých opakování zvládneš s bezchybnou technikou u každého cviku – to je tvoje výchozí číslo do dalšího bloku.</p>
-        ${testRows}`;
-    }
-  }
-
-  return `<button class="back" data-act="back">‹ Plán</button>
-    <div class="meta">${esc(metaLine)}</div>
-    <h1 class="view-title">${esc(dayTitle(info))}</h1>
-    ${body}
-    <button class="done-btn${done?" is-done":""}" data-act="toggle-done" data-n="${n}">
-      ${done?"✓ Hotovo — klepnutím zrušit":"Označit den jako hotový"}
-    </button>`;
-}
-
-function viewExercises(){
-  const rows = Object.keys(EXERCISES).map(id=>{
-    const subbed = !!state.subs[id];
-    return `<button class="ex-row" data-act="open-exercise" data-id="${id}" data-from="exercises">
-      <span class="ex-main">
-        <span class="ex-name">${esc(displayName(id))}</span>
-        <span class="ex-sub">${subbed?"náhrada za "+esc(EXERCISES[id].name):esc(EXERCISES[id].target)}</span>
-      </span>
-      <span class="chev">›</span>
-    </button>`;
-  }).join("");
-  return `<h1 class="view-title">Cviky</h1>
-    <p class="lede">Pět základních cviků plánu. U každého najdeš techniku, bezpečnostní body pro věk 40+, lehčí variantu a možnost natrvalo ho nahradit alternativou.</p>
-    ${rows}`;
-}
-
-function viewExercise(id, from, n){
-  const ex = EXERCISES[id];
-  const sub = state.subs[id] || null;
-  const backLabel = from==="day" ? "‹ Den "+n : "‹ Cviky";
-  const alts = ex.alternatives.map(a=>
-    `<button class="alt${sub===a?" active":""}" data-act="set-sub" data-id="${id}" data-val="${esc(a)}">${esc(a)}</button>`
-  ).join("");
-
-  return `<button class="back" data-act="back">${esc(backLabel)}</button>
-    <div class="meta">Cvik · ${esc(ex.target)}</div>
-    <h1 class="view-title">${esc(ex.name)}</h1>
-    <div class="ex-en">${esc(ex.en)}</div>
-
-    ${sub ? `<div class="sub-now">
-        <b>Náhrada je aktivní.</b> Ve všech dnech plánu cvičíš: <b>${esc(sub)}</b>.<br>
-        Popis níže platí pro původní cvik – u náhrady se řiď jejím vlastním správným provedením.
-        <div style="margin-top:8px"><button class="btn ghost" data-act="clear-sub" data-id="${id}">Vrátit původní cvik</button></div>
-      </div>` : ""}
-
-    <h2 class="sec">Výchozí pozice</h2>
-    <div class="sec-box">${esc(ex.start)}</div>
-
-    <h2 class="sec">Provedení krok za krokem</h2>
-    <div class="sec-box"><ol>${ex.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
-
-    <h2 class="sec">Bezpečné cvičení po čtyřicítce</h2>
-    <div class="sec-box safe"><ul>${ex.safety.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div>
-
-    <h2 class="sec">Lehčí varianta</h2>
-    <div class="sec-box easy">${esc(ex.easier)}</div>
-
-    <h2 class="sec">Náhrada cviku</h2>
-    <p style="font-size:.9rem;color:var(--ink-soft)">Kterýkoli cvik můžeš natrvalo nahradit – třeba kvůli bolavému rameni, koleni nebo zápěstí. Volba se uloží a použije ve všech dnech plánu.</p>
-    ${ex.wristNote ? `<div class="tip">Máš‑li po staré tříštivé zlomenině citlivé zápěstí, klasické kliky (i s uvolněním rukou) dráždí kvůli extenzi. Vyber některou z variant s rovným zápěstím níže.</div>` : ""}
-    <div class="alt-list">${alts}</div>
-    <div class="custom-row">
-      <input type="text" data-role="custom-sub" placeholder="Vlastní alternativa…" value="${sub && !ex.alternatives.includes(sub) ? esc(sub) : ""}">
-      <button class="btn" data-act="set-sub-custom" data-id="${id}">Uložit</button>
-    </div>`;
 }
 
 function viewSettings(){
   const done = trainingDoneCount();
   const dots = Array.from({length:12}, (_,i)=>`<i class="${i<done?"on":""}"></i>`).join("");
   const subKeys = Object.keys(state.subs);
+  const exList = Object.keys(EXERCISES).map(id=>
+    `<button class="ex-row" data-act="open-modal" data-id="${id}" style="margin-top:8px">
+      <span class="ex-main">
+        <span class="ex-name">${esc(displayName(id))}</span>
+        <span class="ex-sub">${state.subs[id] ? "náhrada za "+esc(EXERCISES[id].name) : esc(EXERCISES[id].target)}</span>
+      </span>
+      <span class="chev">›</span>
+    </button>`).join("");
   const subList = subKeys.length
     ? subKeys.map(id=>`<div class="sub-line"><span>${esc(EXERCISES[id].name)} → <b>${esc(state.subs[id])}</b></span>
         <button class="rv" data-act="clear-sub" data-id="${id}">vrátit</button></div>`).join("")
-    : `<p class="note">Zatím žádné záměny.</p>`;
+      + `<button class="txt-btn" data-act="clear-subs">Vymazat všechny záměny</button>`
+    : `<p class="note">Zatím žádné záměny. Otevři cvik výše a vyber alternativu.</p>`;
 
   return `<h1 class="view-title">Nastavení</h1>
 
@@ -685,9 +674,13 @@ function viewSettings(){
     </div>
 
     <div class="set-group">
-      <h3>Záměny cviků</h3>
+      <h3>Cviky a náhrady</h3>
+      ${exList}
+    </div>
+
+    <div class="set-group">
+      <h3>Aktivní záměny</h3>
       ${subList}
-      ${subKeys.length?`<button class="txt-btn" data-act="clear-subs">Vymazat všechny záměny</button>`:""}
     </div>
 
     <div class="set-group">
@@ -705,6 +698,49 @@ function viewSettings(){
     </div>`;
 }
 
+/* ---------------- modal ---------------- */
+function modalHTML(id){
+  const ex = EXERCISES[id];
+  const sub = state.subs[id] || null;
+  const alts = ex.alternatives.map(a=>
+    `<button class="alt${sub===a?" active":""}" data-act="set-sub" data-id="${id}" data-val="${esc(a)}">${esc(a)}</button>`
+  ).join("");
+  return `<div class="backdrop" data-act="close-modal">
+    <div class="modal" role="dialog" aria-modal="true">
+      <div class="modal-bar"><button class="modal-close" data-act="close-modal" aria-label="Zavřít">✕</button></div>
+      <div class="meta">Cvik · ${esc(ex.target)}</div>
+      <h1 class="view-title">${esc(ex.name)}</h1>
+      <div class="ex-en">${esc(ex.en)}</div>
+
+      ${sub ? `<div class="sub-now">
+          <b>Náhrada je aktivní.</b> Ve všech dnech plánu cvičíš: <b>${esc(sub)}</b>.<br>
+          Popis níže platí pro původní cvik – u náhrady se řiď jejím vlastním správným provedením.
+          <div style="margin-top:8px"><button class="btn ghost" data-act="clear-sub" data-id="${id}">Vrátit původní cvik</button></div>
+        </div>` : ""}
+
+      <h2 class="sec">Výchozí pozice</h2>
+      <div class="sec-box">${esc(ex.start)}</div>
+
+      <h2 class="sec">Provedení krok za krokem</h2>
+      <div class="sec-box"><ol>${ex.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>
+
+      <h2 class="sec">Bezpečné cvičení po čtyřicítce</h2>
+      <div class="sec-box safe"><ul>${ex.safety.map(s=>`<li>${esc(s)}</li>`).join("")}</ul></div>
+
+      <h2 class="sec">Lehčí varianta</h2>
+      <div class="sec-box easy">${esc(ex.easier)}</div>
+
+      <h2 class="sec">Náhrada cviku</h2>
+      <p style="font-size:.9rem;color:var(--ink-soft)">Kterýkoli cvik můžeš natrvalo nahradit – třeba kvůli bolavému rameni, koleni nebo zápěstí. Volba se uloží a použije ve všech dnech plánu.</p>
+      ${ex.wristNote ? `<div class="tip">Máš‑li po staré tříštivé zlomenině citlivé zápěstí, klasické kliky (i s uvolněním rukou) dráždí kvůli extenzi. Vyber některou z variant s rovným zápěstím níže.</div>` : ""}
+      <div class="alt-list">${alts}</div>
+      <div class="custom-row">
+        <input type="text" data-role="custom-sub" placeholder="Vlastní alternativa…" value="${sub && !ex.alternatives.includes(sub) ? esc(sub) : ""}">
+        <button class="btn" data-act="set-sub-custom" data-id="${id}">Uložit</button>
+      </div>
+    </div></div>`;
+}
+
 /* ---------------- theme ---------------- */
 function applyTheme(){
   const root = document.documentElement;
@@ -716,8 +752,63 @@ function toggleTheme(){
   const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
   const effective = state.theme || (prefersDark ? "dark" : "light");
   state.theme = effective==="dark" ? "light" : "dark";
-  save(); render();
+  save();
 }
+
+/* ---------------- render pipeline ---------------- */
+function renderView(){
+  const v = state.view;
+  const key = v.name+":"+(v.n||"")+":"+(v.from||"");
+  if(v.name==="today")        main.innerHTML = viewToday();
+  else if(v.name==="plan")    main.innerHTML = viewPlan();
+  else if(v.name==="settings")main.innerHTML = viewSettings();
+  else if(v.name==="day")     main.innerHTML = viewDay(v.n);
+  if(key !== lastViewKey){ window.scrollTo(0,0); main.scrollTop = 0; lastViewKey = key; }
+}
+function renderChrome(){
+  const v = state.view;
+  const titles = { today:"Dnes", plan:"Celý plán", settings:"Nastavení" };
+  document.getElementById("bar-title").textContent =
+    v.name==="day" ? "Den "+v.n : titles[v.name];
+  const back = document.getElementById("bar-back");
+  back.hidden = (v.name === "today");
+  document.getElementById("bar-back-label").textContent =
+    (v.name==="day" && v.from==="plan") ? "Celý plán" : "Dnes";
+}
+function renderMenu(){
+  document.getElementById("menu-sheet").hidden = !menuOpen;
+  document.getElementById("scrim").hidden = !menuOpen;
+}
+function renderModal(){
+  const root = document.getElementById("modal-root");
+  const prev = root.querySelector(".modal");
+  const savedScroll = prev ? prev.scrollTop : 0;
+  root.innerHTML = state.modal ? modalHTML(state.modal.id) : "";
+  document.documentElement.classList.toggle("modal-lock", !!state.modal);
+  const now = root.querySelector(".modal");
+  if(now && savedScroll) now.scrollTop = savedScroll;
+}
+function renderToast(){
+  let t = document.getElementById("toast");
+  if(toastMsg){
+    if(!t){ t = document.createElement("div"); t.id = "toast"; t.className = "toast"; document.getElementById("app").appendChild(t); }
+    t.textContent = toastMsg;
+  } else if(t){ t.remove(); }
+}
+function render(){
+  applyTheme();
+  renderView();
+  renderChrome();
+  renderMenu();
+  renderModal();
+  renderToast();
+}
+function showToast(msg){
+  toastMsg = msg;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>{ toastMsg = null; renderToast(); }, 2400);
+}
+function closeMenu(){ if(menuOpen){ menuOpen = false; renderMenu(); } }
 
 /* ---------------- events ---------------- */
 const app = document.getElementById("app");
@@ -727,39 +818,40 @@ app.addEventListener("click", e=>{
   if(!el) return;
   const act = el.dataset.act;
 
-  if(act==="nav"){ state.view = {name:el.dataset.view}; render(); }
-  else if(act==="theme"){ toggleTheme(); }
-  else if(act==="open-day"){ state.view = {name:"day", n:+el.dataset.n}; render(); }
-  else if(act==="open-exercise"){
-    state.view = {name:"exercise", id:el.dataset.id, from:el.dataset.from||"exercises", n:+el.dataset.n||null};
-    render();
+  if(act==="menu"){ menuOpen = !menuOpen; renderMenu(); }
+  else if(act==="close-overlays"){ closeMenu(); }
+  else if(act==="nav"){ state.view = {name:el.dataset.view}; closeMenu(); render(); }
+  else if(act==="theme"){ toggleTheme(); closeMenu(); render(); }
+  else if(act==="open-day"){
+    state.view = {name:"day", n:+el.dataset.n, from:el.dataset.from||"plan"};
+    closeMenu(); render();
   }
   else if(act==="back"){
     const v = state.view;
-    if(v.name==="exercise" && v.from==="day") state.view = {name:"day", n:v.n};
-    else if(v.name==="exercise") state.view = {name:"exercises"};
-    else state.view = {name:"plan"};
-    render();
+    if(v.name==="day") state.view = { name: v.from==="plan" ? "plan" : "today" };
+    else state.view = { name:"today" };
+    closeMenu(); render();
+  }
+  else if(act==="open-modal"){ state.modal = {id:el.dataset.id}; closeMenu(); renderModal(); }
+  else if(act==="close-modal"){
+    if(e.target === el || e.target.classList.contains("modal-close")){ state.modal = null; renderModal(); }
   }
   else if(act==="toggle-done"){
     const n = +el.dataset.n;
     const i = state.completed.indexOf(n);
+    const nowDone = i < 0;
     if(i>=0) state.completed.splice(i,1); else state.completed.push(n);
-    save(); render();
+    save();
+    if(nowDone && el.dataset.context==="today") showToast("Hotovo ✓ — další den je na řadě");
+    render();
   }
-  else if(act==="set-sub"){
-    state.subs[el.dataset.id] = el.dataset.val;
-    save(); render();
-  }
+  else if(act==="set-sub"){ state.subs[el.dataset.id] = el.dataset.val; save(); render(); }
   else if(act==="set-sub-custom"){
-    const inp = main.querySelector('[data-role="custom-sub"]');
+    const inp = document.querySelector('[data-role="custom-sub"]');
     const val = inp && inp.value.trim();
     if(val){ state.subs[el.dataset.id] = val; save(); render(); }
   }
-  else if(act==="clear-sub"){
-    delete state.subs[el.dataset.id];
-    save(); render();
-  }
+  else if(act==="clear-sub"){ delete state.subs[el.dataset.id]; save(); render(); }
   else if(act==="clear-progress"){
     if(confirm("Opravdu vymazat všechny odškrtané dny?")){ state.completed = []; save(); render(); }
   }
@@ -769,10 +861,16 @@ app.addEventListener("click", e=>{
 });
 
 app.addEventListener("change", e=>{
-  const el = e.target;
-  if(el.dataset.role==="start-date" && el.value){
-    state.startDate = el.value;
+  if(e.target.dataset.role==="start-date" && e.target.value){
+    state.startDate = e.target.value;
     save(); render();
+  }
+});
+
+document.addEventListener("keydown", e=>{
+  if(e.key === "Escape"){
+    if(state.modal){ state.modal = null; renderModal(); }
+    else if(menuOpen){ closeMenu(); }
   }
 });
 
