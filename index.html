@@ -225,10 +225,13 @@ p{margin:.7rem 0}
   padding:12px 14px;margin:12px 0;font-size:.9rem}
 .sub-now b{font-family:var(--font-display)}
 .alt-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
-.alt{width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;
+.alt-wrap{display:flex;gap:6px}
+.alt{flex:1;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;
   padding:11px 13px;font-size:.9rem;line-height:1.4}
 .alt.active{border-color:var(--accent);background:var(--accent-soft);font-weight:600}
 .alt.active::before{content:"✓ ";color:var(--accent)}
+.alt-info{flex:none;width:40px;border:1px solid var(--line);background:var(--surface);border-radius:10px;
+  color:var(--ink-faint);font-size:1rem}
 .custom-row{display:flex;gap:8px;margin-top:10px}
 .custom-row input{flex:1;min-width:0;border:1px solid var(--line);border-radius:10px;padding:10px 12px;
   background:var(--surface);color:var(--ink);font:inherit}
@@ -412,9 +415,55 @@ const EXERCISES = {
     ],
     easier:"Rozděl pohyb: nejdřív procvič jen natažení paže (noha zůstává na zemi), pak jen natažení nohy (paže drží). Spoj obojí až ve chvíli, kdy trup nevrtí. Můžeš zmenšit rozsah.",
     alternatives:[
-      "Dead-bug vleže na zádech – pokud vadí kolena nebo zápěstí",
-      "Prkno na předloktích, postupně prodlužuj výdrž",
-      "Izometrický dřep zády u stěny"
+      "Dead Bug",
+      "Prkno na předloktích"
+    ]
+  },
+  deadbug:{
+    name:"Dead Bug", en:"Dead Bug",
+    target:"Hluboký stabilizační systém (příčný sval břišní) – bez zátěže na záda i zápěstí",
+    start:"Leh na zádech, paže natažené kolmo nad hrudníkem, kolena pokrčená v pravém úhlu nad boky (poloha „stolu“). Bedra jsou po celou dobu přitisknutá k zemi.",
+    steps:[
+      "Zpevni břicho tak, aby se bedra nezvedla ze země – to je hlavní úkol cviku.",
+      "Pomalu spouštěj jednu paži za hlavu a současně natahuj protilehlou nohu těsně nad zem.",
+      "Jakmile ucítíš, že se bedra chtějí prohnout od země, zastav se – to je tvůj bezpečný rozsah.",
+      "Kontrolovaně se vrať do výchozí pozice.",
+      "Vystřídej strany, dýchej plynule, výdech při natahování končetin."
+    ],
+    safety:[
+      "Bedra musí zůstat přitisknutá k podlaze po celou dobu – ruku si tam na začátku polož, ať to cítíš.",
+      "Žádné trhání ani spěch, jde o kontrolu, ne o rychlost.",
+      "Zápěstí ani kolena nejsou nijak zatížená – ideální při citlivém zápěstí.",
+      "Menší rozsah pohybu je lepší než velký s prohnutými zády."
+    ],
+    easier:"Nejdřív dělej jen nohy (paže zůstávají nahoře nad hrudníkem), nebo jen paže (nohy zůstávají ve „stole“). Spoj obě strany, až budou bedra zůstávat klidně na zemi.",
+    alternatives:[
+      "Bird-Dog",
+      "Prkno na předloktích",
+      "Přitažení kolena k hrudníku vsedě na židli, s oporou zad"
+    ]
+  },
+  plank:{
+    name:"Prkno na předloktích", en:"Forearm Plank",
+    target:"Celý střed těla (břišní i zádové svaly), izometricky – bez pohybu v kloubech",
+    start:"Leh na břiše, opři se o předloktí (lokty přesně pod rameny, předloktí vedle sebe nebo dlaně sepnuté). Zvedni se na špičky, tělo v jedné rovné linii od hlavy po paty.",
+    steps:[
+      "Zatáhni pupík k páteři a stáhni hýždě – to udrží bedra v neutrální poloze.",
+      "Krk drž prodloužený, pohled mírně před sebe na zem.",
+      "Dýchej plynule po celou výdrž, dech nezadržuj.",
+      "Vydrž stanovený čas a pak se kontrolovaně polož."
+    ],
+    safety:[
+      "Váha je na předloktích, ne na dlaních – zápěstí zůstává zcela bez zátěže.",
+      "Boky nesmí klesat do prohnutí ani stoupat do „stříšky“ – obojí zbytečně zatěžuje bedra.",
+      "Krátká kvalitní výdrž je lepší než dlouhá s povolenou technikou – jakmile bedra klesnou, konči.",
+      "Ramena drž dál od uší, nezadržuj dech."
+    ],
+    easier:"Opři se předloktími o vyvýšenou plochu (postel, gauč, opěradlo) místo o zem – čím výš, tím lehčí. Nebo dělej prkno na kolenou místo na špičkách.",
+    alternatives:[
+      "Dead Bug",
+      "Bird-Dog",
+      "Zkrácená výdrž (10–15 s) s delší pauzou mezi sériemi"
     ]
   }
 };
@@ -647,8 +696,8 @@ function viewSettings(){
   const exList = Object.keys(EXERCISES).map(id=>
     `<button class="ex-row" data-act="open-modal" data-id="${id}" style="margin-top:8px">
       <span class="ex-main">
-        <span class="ex-name">${esc(displayName(id))}</span>
-        <span class="ex-sub">${state.subs[id] ? "náhrada za "+esc(EXERCISES[id].name) : esc(EXERCISES[id].target)}</span>
+        <span class="ex-name">${esc(EXERCISES[id].name)}</span>
+        <span class="ex-sub">${state.subs[id] ? "náhrada: "+esc(state.subs[id]) : esc(EXERCISES[id].target)}</span>
       </span>
       <span class="chev">›</span>
     </button>`).join("");
@@ -699,12 +748,20 @@ function viewSettings(){
 }
 
 /* ---------------- modal ---------------- */
+function findExerciseByName(name){
+  return Object.keys(EXERCISES).find(k=>EXERCISES[k].name===name) || null;
+}
 function modalHTML(id){
   const ex = EXERCISES[id];
   const sub = state.subs[id] || null;
-  const alts = ex.alternatives.map(a=>
-    `<button class="alt${sub===a?" active":""}" data-act="set-sub" data-id="${id}" data-val="${esc(a)}">${esc(a)}</button>`
-  ).join("");
+  const alts = ex.alternatives.map(a=>{
+    const linkedId = findExerciseByName(a);
+    const showLink = linkedId && linkedId !== id;
+    return `<div class="alt-wrap">
+      <button class="alt${sub===a?" active":""}" data-act="set-sub" data-id="${id}" data-val="${esc(a)}">${esc(a)}</button>
+      ${showLink?`<button class="alt-info" data-act="open-modal" data-id="${linkedId}" aria-label="Zobrazit techniku cviku ${esc(a)}">›</button>`:""}
+    </div>`;
+  }).join("");
   return `<div class="backdrop" data-act="close-modal">
     <div class="modal" role="dialog" aria-modal="true">
       <div class="modal-bar"><button class="modal-close" data-act="close-modal" aria-label="Zavřít">✕</button></div>
@@ -731,7 +788,7 @@ function modalHTML(id){
       <div class="sec-box easy">${esc(ex.easier)}</div>
 
       <h2 class="sec">Náhrada cviku</h2>
-      <p style="font-size:.9rem;color:var(--ink-soft)">Kterýkoli cvik můžeš natrvalo nahradit – třeba kvůli bolavému rameni, koleni nebo zápěstí. Volba se uloží a použije ve všech dnech plánu.</p>
+      <p style="font-size:.9rem;color:var(--ink-soft)">Kterýkoli cvik můžeš natrvalo nahradit – třeba kvůli bolavému rameni, koleni nebo zápěstí. Volba se uloží a použije ve všech dnech plánu. Šipka › u alternativy otevře její vlastní techniku.</p>
       ${ex.wristNote ? `<div class="tip">Máš‑li po staré tříštivé zlomenině citlivé zápěstí, klasické kliky (i s uvolněním rukou) dráždí kvůli extenzi. Vyber některou z variant s rovným zápěstím níže.</div>` : ""}
       <div class="alt-list">${alts}</div>
       <div class="custom-row">
